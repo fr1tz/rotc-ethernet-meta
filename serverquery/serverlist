@@ -1,0 +1,15 @@
+#!/bin/sh
+
+run_rotc() {
+	aux=`dirname $0` && 
+	(cd $aux && nice -n19 ./rotc.bin)
+}
+
+run_rotc | sed '/^%/d'
+
+
+
+
+
+
+

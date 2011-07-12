@@ -1,0 +1,42 @@
+#!/bin/sh
+
+init() {
+	aux=`dirname $0` &&
+	tmp=/tmp/$USER.watcher.$$ &&
+	mkdir -p $tmp
+}
+
+end() {
+	rm -r $tmp
+	exit
+}
+
+print_players() {
+	clear
+	awk '$2 == "player_count" { print $3 "/" $5 }' | tr '\n' "$sep"
+}
+
+print_servers() {
+	$aux/serverlist | sort > $tmp/serverlist &&
+	print_players < $tmp/serverlist
+}
+
+main() {
+	sep='\n'
+	test $# -eq 1 && sep=' '	
+	while(print_servers); do sleep 5; done
+}
+
+init || exit
+main $*
+end
+
+
+
+
+
+
+
+
+
+
